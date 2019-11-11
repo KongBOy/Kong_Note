@@ -1,0 +1,5 @@
+sec 3.16 如何正確的合併分支
+	1.先checkout到 merge的目的地
+		例如：想要 develope 合併到 master，
+			git checkout master → 先切換到master
+	2.git merge develope
