@@ -1,0 +1,17 @@
+sec2.09 中文亂碼 on git status 和 git log
+	git status 中文亂碼：
+		因為git預設只能顯示 一個字元 的 ascll碼， 
+		所以把 quotepath關掉後， 
+		就可以顯示 兩個字元 的 中文碼了
+		git config --global core.quotepath false  → 可解決git status中文亂碼
+		
+	git log 中文亂碼：
+		在git-bash可能正常，
+		但在cmd內可能不正常！
+		這樣子的話，在cmd裡面打
+			開啟一次cmd就要打一次：
+				set LC_ALL=C.UTF-8  → 設定 LC_ALL這個環境變數 為 C.UTF-8
+			設一次一勞永逸：
+				setx LC_ALL C.UTF-8
+		
+		MAC 的設定方法(跳過)

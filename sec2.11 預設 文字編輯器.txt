@@ -1,0 +1,14 @@
+sec2.11 預設 文字編輯器
+	git confit core.editor → 查看目前預設使用的編輯器
+	git config --global core.editor 「你要的編輯器」 → 設定預設編輯器用哪個
+	
+	補充：
+		建議不要用notepad，
+		用 notepad++
+			 對.exe按shift+右鍵 → 可以直接copy路徑
+			 如果有問題：
+			 "路徑" → 加一對單引號 "'路徑'"
+				舉例："C:\Program Files (x86)\Notepad++\notepad++.exe"
+				     →"'C:\Program Files (x86)\Notepad++\notepad++.exe'"
+		   VSCode：
+		     去google一下就知道了

@@ -1,0 +1,21 @@
+sec2.12 4種 git命令列環境
+	windows 下的 git 的命令列環境 工具a	
+		1.cmd
+			缺：按tab 無法自動補字
+			
+		2.git-bash
+			在資料夾下點右鍵
+			優：提示列 就 顯示了 目前所在的分支，不用打git status才知道
+				按tab      可以自動補字
+				按tab兩次  可以顯示參數
+				
+				可以用unix 常見的工具都可以使用 ex:ls
+				
+		3.power shell(先跳過)
+			不熟別用，熟了搭配git很強
+			可用poshgit
+				安裝：在powershell下打：choco install poshgit -y
+				
+				
+		4.wsl(先跳過)
+			在windows下安裝ubuntu，跳過
