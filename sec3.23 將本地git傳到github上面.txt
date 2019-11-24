@@ -1,0 +1,8 @@
+git remote -v → 看本地git 使用的 遠端儲存庫 是什麼
+git remote add 「遠端名字，建議設預設origin」 「遠端網址url」→ 本地git 加入 遠端位置 加入 你指定的網址，把網址命名為你指定的遠端名字
+git push -u 「遠端名字，建議用愈設origin」 master → 將你目前的分支master push 到遠端 你指定的 遠端名字，以此例就是上面的 遠端網址url
+git push --set-upstream 「遠端名字，建議用愈設origin」 master → 遠端未來要建立的master branch 和 本地的master branch 做鏈結 作為預設使用
+git branch -r → 列出遠端追蹤分支
+git branch -a → 列出本地分支和遠端追蹤分支
+git push -u origin develop
+
