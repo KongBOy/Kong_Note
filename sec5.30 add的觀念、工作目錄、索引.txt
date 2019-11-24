@@ -1,0 +1,9 @@
+git add → 把工作目錄所有的變更 加入 索引(暫存區)
+git reset HEAD → 把 索引 還原成到目前最新commit版
+git status → 索引 和 最新commit版 的差異
+
+git commit → 把 索引(暫存區)內 和 目前最新commit版 不同的地方 比較、建立 新的commit版本
+
+
+索引相關檔案：
+	放在 .git/index (這index是二進位檔)
