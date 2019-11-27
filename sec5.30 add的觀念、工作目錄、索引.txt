@@ -2,12 +2,12 @@ git add → 把工作目錄所有的變更 加入 索引(暫存區)
 git reset HEAD → 把 索引 還原成到目前最新commit版
 git status → 工作目錄與索引 和 索引與最新commit版 的差異
 	工作目錄中的檔案與最新commit版 不同時：
-		工作目錄中的檔案 是否存在 索引中 ：
-			Untracked filesl："檔案"不存在
-			Tracked files   ："檔案"存在(不顯示)  
+		工作目錄中的"檔案" 是否存在 索引中 ：
+			Untracked filesl："檔案"不存在(顯示：白字 Untracked files         紅字file_name)
+			Tracked files   ："檔案"存在  (顯示：白字 Changes to be commited  綠字file_name)  
 		工作目錄 和 索引 中 的檔案"內容" 一致 或 不一致：
-			unstage："內容"有不一致的地方
-			stagel ："內容"有一致的地方
+			unstage："內容"有不一致的地方 (顯示：白字 Changes not staged for commit   紅字modified)
+			stage  ："內容"有一致的地方   (顯示：白字 Changes to be committed         綠字modified或new file)
 
 git commit → 把 索引(暫存區)內 和 目前最新commit版 不同的地方 比較、建立 新的commit版本
 
