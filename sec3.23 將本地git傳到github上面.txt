@@ -1,8 +1,164 @@
-git remote -v → 看本地git 使用的 遠端儲存庫 是什麼
-git remote add 「遠端名字，建議設預設origin」 「遠端網址url」→ 本地git 加入 遠端位置 加入 你指定的網址，把網址命名為你指定的遠端名字
-git push -u 「遠端名字，建議用愈設origin」 master → 將你目前的分支master push 到遠端 你指定的 遠端名字，以此例就是上面的 遠端網址url
-git push --set-upstream 「遠端名字，建議用愈設origin」 master → 遠端未來要建立的master branch 和 本地的master branch 做鏈結 作為預設使用
-git branch -r → 列出遠端追蹤分支
-git branch -a → 列出本地分支和遠端追蹤分支
-git push -u origin develop
+sec3.22 如何從 遠端repo 下載repo回來
+	git clone 遠端repo的網址 資料夾名稱(可省，省的話就用遠端repo預設的名稱建一個資料夾，然後資料放裡面)
+	打完會出現以下訊息：
+		$ git clone https://github.com/xhujoy/CycleGAN-tensorflow
+		Cloning into 'CycleGAN-tensorflow'...
+		remote: Enumerating objects: 191, done.   → 遠端有幾個元件要下載下來
+		remote: Total 191 (delta 0), reused 0 (delta 0), pack-reused 191
+		Receiving objects: 100% (191/191), 12.32 MiB | 911.00 KiB/s, done.
+		Resolving deltas: 100% (100/100), done.
+		
+		clone完成後，會自動幫我們做一個checkout的動作，所以會在資料夾裡看到很多檔案
+	
+	git clone --no-checkout 遠端repo的網址 資料夾名稱(可省)
+		clone完，不會幫你自動checkout，常用在很大的專案，下載回來不想checkout
+		
+	git clone --bare 遠端repo的網址 資料夾名稱(可省)
+		只下載.git回來，意思就是只下載版控資訊，不下載工作目錄
+		可以用在本機上模擬遠端repo的效果，以下舉例：
+		git clone --bare https://github.com/xiaoyu258/DocProj.git → 只從遠端下載版控資訊回來
+		git clone DocProj.git → 注意這裡不是clone 遠端url，是本地剛剛用bare下載回來的版控資料夾，就有模擬遠端repo的感覺囉！	
 
+sec3.23 將本地git傳到github上面
+	git remote -v → 看本地git 使用的 遠端儲存庫 是什麼
+	git remote add 「origin：遠端名字，建議用此預設」 「遠端網址url」→ 本地git 加入 遠端位置 加入 你指定的網址，把網址命名為你指定的遠端名字
+	
+	git push -u 「origin：遠端名字，建議用此預設」 「本地分支，舉例用master」 
+	git push --set-upstream 「origin：遠端名字，建議用此預設」 「本地分支，舉例用master」 
+		上二指令一樣效果，只差再參數的 長短 與 可讀性 而已
+		將本地分支 和 遠端分支 做 鏈結，並將本地分支的commit資訊、工作目錄 上傳到 遠端repo 相應的分支
+	
+	git push → 
+		看你本地目前在哪個branch，如果執行完上面兩者的其中一個 建立好關係的話，就可以把本地 目前所在分支 的commit資訊、工作目錄 上傳到 遠端repo 相應的分支
+		注意！一定要切到相應的分支，以master分支為例子，要先git checkout master，再打這指令
+	
+	git branch -r → 列出遠端追蹤分支
+	git branch -a → 列出本地分支和遠端追蹤分支
+	git push -u origin develop → 將你本地的develope push 到遠端 你指定的 遠端名字
+
+sec3.24 理解本地分之、遠端分之、遠端追蹤分支
+	遠端追蹤分支 是拿來追蹤用、參考的，不是拿來開發用的，所以不要checkout 到上面，如果硬checkout過去，會看到有detached HEAD訊息，這是有問題的~~checkout 應該要永遠都 只用在 本地分支
+	追蹤、參考說的具體點，就是拿來給 git push 參考用的，
+	如果現在在master下打git push，那就會去參考到remote/origin/master這個遠端追蹤分支是連結到遠端的哪個分支，然後做push的動作
+		
+	遠端追蹤分之的資訊放在：.git/config，部分內容如下：
+		[remote "origin"] //遠端名稱
+		url = https://github.com/KongBOy/Practice-GitHub.git //遠端名稱對應的url
+		fetch = +refs/heads/*:refs/remotes/origin/* //前面是 本地分支，後面是遠端分支， 這就是設定 本地分支如何和遠端分支做對應，建議這裡不要改
+		[branch "master"] // 本地的master分支
+			remote = origin //要對應到remote的origin/master分支
+			merge = refs/heads/master //如果要做merge，要用本地的這個檔案的資訊來做merge
+		[branch "develope"]
+			remote = origin
+			merge = refs/heads/develope
+		[branch "c_branch"]
+			remote = origin
+			merge = refs/heads/c_branch
+		[branch "d_branch"]
+			remote = origin
+			merge = refs/heads/d_branch
+
+sec3.25 如何「發布本地分支」和「取得遠端分支」
+	假如你今天是 一個專案 的新的開發者
+	git clone 下載回 遠端repo，注意好像clone回來不會checkout出所有分支，只會checkout出master分支(或者.git/config下紀錄的第一個branch吧?)
+	如果你今天想用其中的develope分支，但直接clone出來不會有
+	不要直接checkout到 遠端追蹤分支remotes/origin/develope上！而是直接用
+	git checkout develope，他會去找 遠端追蹤分支remotes/origin/develope裡面相對應的資訊，把develope分支建立出來，並建立起鏈結
+	
+	發布本地分支：
+	git push -u origin 要發布的本地分支
+	
+	接收發布分支：
+	git fetch 從遠端repo下載回所有資訊，其中包含遠端追蹤分支
+	git checkout 要取得的分支
+	
+sec3.26 如何 刪除「本地分支」與「遠端追蹤分支」
+	開發者a：
+	把new1分支合併回develope，用no-ff，合併完成，想把new1砍掉
+	在砍掉之前，通常會先將develope的最新版發一版到遠端repo
+	git push
+	
+	開發者b 接收repo：
+	git pull = git fetch + git merge 
+	*****以上只單純的讓兩位開發者develope分支變得一樣而已*****
+	開發者a：
+	git branch -d 本地分支(ex:new1) →刪除本地分支
+	git push origin --delete 遠端分支(ex:new1) →刪除遠端分支，同時也會刪除本地的遠端追蹤分支
+	
+	開發者b：
+	git fetch --prune →比對本地分支和遠端分支，如果遠端分支已不存在，則刪除本地的遠端追蹤分支
+	git branch -d 本地分支(ex:new1) →刪除本地分支
+
+sec3.27 如何搬動遠端repo 與修改遠端repo的 url
+	像是git遠端repo 想移到 gitlab之類的
+	
+	gir remote -v →
+	git remote -h → 看remote各種用法
+		ex:可以查到這個指令 git remote set-url origin 新網址
+	進去gitlab新建新的repo
+	git remote set-url origin 新網址
+	git push --all → 將本地的所有分支，全部上傳
+	
+	也可以直接去編輯 .git/config設定檔，把下面例子的第二行url改成新網址即可
+	[remote "origin"] //遠端名稱
+	url = https://github.com/KongBOy/Practice-GitHub.git //遠端名稱對應的url
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	
+sec3.28
+	最初始開發者新建repo讓別人下載
+	開發者a
+		git init
+		git add .
+		git commit -m "一些描述"
+		推送本地repo
+		git remote add origin repo網址
+		git push -u origin master
+	
+	開發者b
+		git clone repo網址
+	***************************************************
+	某開發者做了一些commit，想發布給其他開發者
+	開發者a
+		修改檔案
+		git add .
+		git commit -m "修改一"
+		
+		上傳新版本
+		git push
+		
+	開發者b：
+		取回新版本
+		git pull
+	***************************************************
+	兩位開發者同時做push
+	開發者b：
+		修改檔案
+		git add .
+		git commit -m "修改二"
+		
+		上傳新版本
+		git push
+		
+	開發者a：
+		修改檔案
+		git add .
+		git commit -m "修改三"
+		
+		上傳新版本：
+		git push
+		出現 ![rejected]
+			error: failed to push some refs to 網址
+			hint: Updates were rejected because the remote contains work that you do not have locally.
+				  This is usually cased by another repository pushing to the same ref.
+				  You may want to first intergrate the remote changes(e.g., "git pull ...") before pushing again.
+				  See the "Note about fast-forwards"
+		
+		git fetch
+		git merge origin/master
+		上兩個指令可以用git pull一個指令解決，這裡是為了練習所以才分兩個指令
+		
+		git push
+		
+	開發者b：
+		git pull
+		

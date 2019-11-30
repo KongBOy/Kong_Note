@@ -1,20 +1,77 @@
-git add → 把工作目錄所有的變更 加入 索引(暫存區)
-git reset HEAD → 把 索引 還原成到目前最新commit版
-git status → 工作目錄與索引 和 索引與最新commit版 的差異
-	工作目錄中的檔案與最新commit版 不同時：
-		工作目錄中的"檔案" 是否存在 索引中 ：
-			Untracked filesl："檔案"不存在(顯示：白字 Untracked files         紅字file_name)
-			Tracked files   ："檔案"存在  (顯示：白字 Changes to be commited  綠字file_name)  
-		工作目錄 和 索引 中 的檔案"內容" 一致 或 不一致：
-			unstage："內容"有不一致的地方 (顯示：白字 Changes not staged for commit   紅字modified)
-			stage  ："內容"有一致的地方   (顯示：白字 Changes to be committed         綠字modified或new file)
+sec5.30
+	git add → 把工作目錄所有的變更 加入 索引(暫存區)
+	git reset HEAD → 把 索引 還原成到目前最新commit版
+	git status → 工作目錄與索引 和 索引與最新commit版 的差異
+		工作目錄中的檔案與最新commit版 不同時：
+			工作目錄中的"檔案" 是否存在 索引中 ：
+				Untracked filesl："檔案"不存在(顯示：白字 Untracked files         紅字file_name)
+				Tracked files   ："檔案"存在  (顯示：白字 Changes to be commited  綠字file_name)  
+			工作目錄 和 索引 中 的檔案"內容" 一致 或 不一致：
+				unstage："內容"有不一致的地方 (顯示：白字 Changes not staged for commit   紅字modified)
+				stage  ："內容"有一致的地方   (顯示：白字 Changes to be committed         綠字modified或new file)
 
-git commit → 把 索引(暫存區)內 和 目前最新commit版 不同的地方 比較、建立 新的commit版本
+	git commit → 把 索引(暫存區)內 和 目前最新commit版 不同的地方 比較、建立 新的commit版本
 
 
-索引相關檔案：
-	放在 .git/index (這index是二進位檔)
+	索引相關檔案：
+		放在 .git/index (這index是二進位檔)
 
-git add 
-git reset 
-都是在操控索引，不會動到工作目錄的檔案
+	git add 
+	git reset 
+	都是在操控索引，不會動到工作目錄的檔案
+	
+sec5.31 復原最近一次git add動作( 重置index)
+	git reset HEAD(HEAD代表目前的最新版，可省)
+	gir reset
+	
+	reset預設是重製索引，不會動到工作目錄下的所有檔案
+	
+	git add 和 git reset 都不會動到工作目錄下的檔案
+	
+	git reset -p → p是patch、區塊的意思，可以選擇要reset索引中那些區塊
+		常用在設定檔，某些設定只是自己在debug用，不想進入版控時就會用到
+	git diff → 工作目錄 與 索引 之間的差異
+	git diff --cached →索引 和 目前最新版 之間的差異
+	
+sec5.32 (重置工作目錄)
+	git reset --mixed：預設，重置目前的版本(HEAD)、索引(index)
+		常用在你想刪除你某個或一些commit的版本，又想保留目前工作目錄下的所有變更
+	gir reset --hard：重置目前的版本(HEAD)、索引(index)和工作目錄(working tree)
+		常用在你覺得目前的修改不重要，可以直接洗掉的狀況
+	
+	
+	git reset --mixed HEAD~1 回到當前的前一版
+	
+sec5.33 復原 復原
+	git reflog → 紀錄在你這工作目錄下所做的每一次版控紀錄，意思就是你的分支有做任何的異動，都會記錄到reflog這裡
+		分支的異動：commit merge reset rebase
+		
+	git reset ORIG_HEAD
+		ORIG_HEAD 指向 上次 分支異動之前的commit版本
+		merge reset rebase時，ORIG_HEAD才會指向你做這個動作時 之前的一個commit，
+		只有在做commit 時，ORIG_HEAD不會異動，所以ORIG_HEAD不一定會==reflog倒數一個指定的版本
+		
+		可以用文字編輯器 開啟 .git/ORIG_HEAD 看目前ORIG_HEAD只到哪裡
+		
+		
+sec5.34 復原歷史版本中的某個特定版本的所有變更
+	revert做的事情：相反的commit，把你commit進去的動作，做完全相反的操作
+	git revert 版本號，可以多個版本號，就代表一次revert多個commit版本
+	
+	遇到衝突的時候有三個選項：
+		git revert --aboard → 直接中斷revert
+		git revert --continue → 解決完衝突，打這個繼續revert動作
+		git revert --quit → 把剛才成功的revert紀錄下來，停止目前revert的動作
+		
+	解決衝突：
+		跟merge很像，去修改 git 幫你標記的衝突檔案，修改完後打
+		git add . → 把修改衝突的部分加入索引
+		git revert --continue → 做commit的動作，多個revert會跳出多次打log資訊的視窗
+		
+sec5.35 復原某個檔案 和 資料夾
+	git checkout → 取得某一個分支的所有內容
+	git checkout -- 檔案名字/資料夾名稱         → 從索引裡面 拿出 你要的檔案/資料夾 進去工作目錄
+	git checkout 版本號 檔案名字/資料夾名稱     → 從指定的版本
+	git checkout 分支名稱 檔案名字/資料夾名稱   → 從指定的branch
+	
+	

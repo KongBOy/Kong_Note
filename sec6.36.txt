@@ -1,0 +1,13 @@
+sec6.36 不同的git diff 用法：
+	git diff            → 比對 工作目錄 和 索引
+	git diff HEAD(可省) → 比對 工作目錄 和 最新版commit
+	git diff 版本號     → 比對 工作目錄 和 指定的版本號 
+	git diff --cached HEAD(可省) → 比對 索引 和 最新版commit
+	git diff --chached 版本號    → 比對 索引 和 指定的版本號
+	git diff 版本號 版本號 → 比對 兩個指定的版本號
+	
+	
+sec6.37 比對二進位檔之間的差異
+	git diff --binary
+	
+sec6.38 

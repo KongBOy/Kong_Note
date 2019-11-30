@@ -1,0 +1,92 @@
+sec 3.16 如何正確的合併分支
+	1.先checkout到 merge的目的地
+		例如：想要 develope 合併到 master，
+			git checkout master → 先切換到master
+	2.git merge develope → 注意要先 git checkout master 在執行這行，把develop合併到master裡面
+		補充：merge預設是用fast-forward的方式來merge，意思是如果develope是master的未來版，master不會建立新commit，而是直接合併進develope裡這樣子(詳情看sec 3.19)
+		
+sec 3.17 如何在命令列下查看「版本線圖」
+	git log --oneline
+	git log --graph
+	git log --oneline --graph
+	git log --oneline --graph --all
+	
+sec 3.18 merge發生衝突怎麼解決
+	git checkout master(或你要merge的目的地)
+	git merge develope，假設此時發生衝突，顯示訊息如下
+		CONFLICT (add/add): Merge conflict in d.txt
+		Auto-merging d.txt
+		Automatic merge failed; fix conflicts and then commit the result.
+		
+		何時發生：要merge的兩個branch 修改到了 相同檔案 的 相同行數 的地方
+		如何解決：發生conflict時，打git status 會顯示如下訊息
+		On branch master
+		You have unmerged paths.
+		  (fix conflicts and run "git commit")
+		  (use "git merge --abort" to abort the merge)
+
+		Unmerged paths:
+		  (use "git add <file>..." to mark resolution)
+
+				both added:      d.txt
+
+		no changes added to commit (use "git add" and/or "git commit -a")
+		
+		
+		git "會去修改" 發生衝突的檔案，我們要做的就是，把發生衝突的檔案裡的git資訊整理好即可，所以過程如下
+			1.用文字編輯器 整理 被git修改過的 衝突檔案 裡的 git資訊，儲存並離開文字編輯器
+			2.「git add 衝突的檔案」或「git add .」也可以，add完打git status會顯示如下：
+				On branch master
+				All conflicts fixed but you are still merging.
+				  (use "git commit" to conclude merge)
+
+				Changes to be committed:
+
+						modified:   d.txt
+
+			3.git commit 不用-m，會跳出來 應該是conflict專門的 commit文字訊息，可以自己打或者把他自動生成的文字訊息前面的#拿掉
+			  git commit 要用-m 也可以，就如平常輸入message一樣
+			
+sec 3.19 fast-forward的觀念：
+		當merge的src(ex:develope)是dst(ex:master)的未來版本(可一次跳多版)時，develope merge進master時「不會建立」新的commit，而是master會合併進去develope
+		這是merge的預設合併模式，為的是方便把本地repo push到遠端repo形成多人合作的repo時，
+		有人對origin/master 做新的commit後，
+		在我自己這邊要 和 遠端repo做pull(=fetch+merge)時比較方便的，可以直接把本地master合併進去新的遠端repo
+		因為遠端origin/master 是master主分支，我本地也是master主分支，
+		概念上都是同一個分支
+		所以適合用fast-forward
+	
+		但是在本地repo中，通常不會想要用fast-forward，因為如果要把master當主分支的話，
+		會需要要把master和develope做區隔，而不是把master併進去develope，這樣子master==develope，主分支的概念就不見了
+		應該要master一個分支、develope一個分支，
+		所以應該要是master「新建一個」commit版本(master一個分支)，
+		然後將develope"做的改變"併進去新建出來的commit版本才對(develope一個分支，且merge的結果進去新建的master commit版)
+		用法：
+		git merge -no-ff
+		
+sec 3.20 其他種merge方式
+	git merge -no-ff --no-commit → 只做合併，但不commit，常用在先測試merge過來的程式碼有沒有問題，沒問題後再commit
+	在合併的過程中 可以做修改喔
+	git add .
+	git commit 
+	
+	
+	git squash → 壓縮合併 
+		把src分支裡的所有版本 壓縮合併 進去 dst分支的 下一個新建的版本，
+		通常用在你建立的分支，只是用來做小測試之類的用途，"不需要保留--graph線圖"，就可以考慮用squash
+		squash合併完src不會有線連到master新版commit，且刪除src後整條src分支在線圖上都會消失
+		整條消失的原因可能是因為squash，壓縮整條進去新版，所以整條刪掉也沒差了吧?
+	git commit 
+		影片有說可以用預設訊息
+		
+		
+sec 3.21 如何刪除所有已經合併的分支
+	git branch --merged → 查看已經被merged的分支有哪些
+		不過這個指令會顯示你目前所在的branch，
+		如果你目前的branch沒有被合併，也會顯示出來喔
+		
+	一口氣刪掉所有的 merged分支，可以直接google，影片覺得不錯的：
+		git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+			egrep -v 反向搜尋
+			"(^\*|master|dev)" 沒有*開頭、不是master、不是dev(這裡可以自己改)
+			xargs 把輸入的文字轉成後面工具輸入的參數
