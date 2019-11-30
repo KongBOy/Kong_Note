@@ -1,4 +1,4 @@
-sec3.22 如何從 遠端repo 下載repo回來
+sec4.22 如何從 遠端repo 下載repo回來
 	git clone 遠端repo的網址 資料夾名稱(可省，省的話就用遠端repo預設的名稱建一個資料夾，然後資料放裡面)
 	打完會出現以下訊息：
 		$ git clone https://github.com/xhujoy/CycleGAN-tensorflow
@@ -19,7 +19,7 @@ sec3.22 如何從 遠端repo 下載repo回來
 		git clone --bare https://github.com/xiaoyu258/DocProj.git → 只從遠端下載版控資訊回來
 		git clone DocProj.git → 注意這裡不是clone 遠端url，是本地剛剛用bare下載回來的版控資料夾，就有模擬遠端repo的感覺囉！	
 
-sec3.23 將本地git傳到github上面
+sec4.23 將本地git傳到github上面
 	git remote -v → 看本地git 使用的 遠端儲存庫 是什麼
 	git remote add 「origin：遠端名字，建議用此預設」 「遠端網址url」→ 本地git 加入 遠端位置 加入 你指定的網址，把網址命名為你指定的遠端名字
 	
@@ -36,7 +36,7 @@ sec3.23 將本地git傳到github上面
 	git branch -a → 列出本地分支和遠端追蹤分支
 	git push -u origin develop → 將你本地的develope push 到遠端 你指定的 遠端名字
 
-sec3.24 理解本地分之、遠端分之、遠端追蹤分支
+sec4.24 理解本地分之、遠端分之、遠端追蹤分支
 	遠端追蹤分支 是拿來追蹤用、參考的，不是拿來開發用的，所以不要checkout 到上面，如果硬checkout過去，會看到有detached HEAD訊息，這是有問題的~~checkout 應該要永遠都 只用在 本地分支
 	追蹤、參考說的具體點，就是拿來給 git push 參考用的，
 	如果現在在master下打git push，那就會去參考到remote/origin/master這個遠端追蹤分支是連結到遠端的哪個分支，然後做push的動作
@@ -58,7 +58,7 @@ sec3.24 理解本地分之、遠端分之、遠端追蹤分支
 			remote = origin
 			merge = refs/heads/d_branch
 
-sec3.25 如何「發布本地分支」和「取得遠端分支」
+sec4.25 如何「發布本地分支」和「取得遠端分支」
 	假如你今天是 一個專案 的新的開發者
 	git clone 下載回 遠端repo，注意好像clone回來不會checkout出所有分支，只會checkout出master分支(或者.git/config下紀錄的第一個branch吧?)
 	如果你今天想用其中的develope分支，但直接clone出來不會有
@@ -72,7 +72,7 @@ sec3.25 如何「發布本地分支」和「取得遠端分支」
 	git fetch 從遠端repo下載回所有資訊，其中包含遠端追蹤分支
 	git checkout 要取得的分支
 	
-sec3.26 如何 刪除「本地分支」與「遠端追蹤分支」
+sec4.26 如何 刪除「本地分支」與「遠端追蹤分支」
 	開發者a：
 	把new1分支合併回develope，用no-ff，合併完成，想把new1砍掉
 	在砍掉之前，通常會先將develope的最新版發一版到遠端repo
@@ -89,7 +89,7 @@ sec3.26 如何 刪除「本地分支」與「遠端追蹤分支」
 	git fetch --prune →比對本地分支和遠端分支，如果遠端分支已不存在，則刪除本地的遠端追蹤分支
 	git branch -d 本地分支(ex:new1) →刪除本地分支
 
-sec3.27 如何搬動遠端repo 與修改遠端repo的 url
+sec4.27 如何搬動遠端repo 與修改遠端repo的 url
 	像是git遠端repo 想移到 gitlab之類的
 	
 	gir remote -v →
@@ -104,7 +104,7 @@ sec3.27 如何搬動遠端repo 與修改遠端repo的 url
 	url = https://github.com/KongBOy/Practice-GitHub.git //遠端名稱對應的url
 	fetch = +refs/heads/*:refs/remotes/origin/*
 	
-sec3.28
+sec4.28
 	最初始開發者新建repo讓別人下載
 	開發者a
 		git init
