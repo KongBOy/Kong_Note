@@ -1,0 +1,21 @@
+sec7.41 修改最近一次的commit
+	方法1：
+		git reset HEAD~1
+		gir reset --mixed HEAD~1
+		
+		然後再把
+		
+		git add .
+		git commit 
+		git commit -am "..." → 等同於 git add . + git commit -m "..."
+		
+		缺點：commit資訊要重打
+		
+	
+	方法2：
+		git commit --amend → 把目前的修改加進 最後一次commit，並沿用最後一次commit的log訊息，並「建立全新的commit！」
+		
+
+sec7.42 想刪除某個不是最後一次commit版
+	gir rebase -i 版本號 → 從哪個版本號開始重訂基底，i是interactive 互動模式的意思
+	
