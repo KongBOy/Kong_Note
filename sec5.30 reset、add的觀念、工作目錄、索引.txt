@@ -1,4 +1,5 @@
-sec5.30
+sec5.30 working_tree/index/repository的重要觀念、tracked/untracked、stage/unstage的觀念
+	我額外還有寫筆記喔，裡面有畫圖覺得不錯如果忘記可以去看！
 	git add → 把工作目錄所有的變更 加入 索引(暫存區)
 	git reset HEAD → 把 索引 還原成到目前最新commit版
 	git status → 工作目錄與索引 和 索引與最新commit版 的差異
@@ -10,7 +11,7 @@ sec5.30
 				unstage："內容"有不一致的地方 (顯示：白字 Changes not staged for commit   紅字modified)
 				stage  ："內容"有一致的地方   (顯示：白字 Changes to be committed         綠字modified或new file)
 
-	git commit → 把 索引(暫存區)內 和 目前最新commit版 不同的地方 比較、建立 新的commit版本
+	git commit → 把 索引(暫存區)內 和 目前最新commit版 比較不同的地方 並  建立 新的commit版本
 
 
 	索引相關檔案：
@@ -34,9 +35,9 @@ sec5.31 復原最近一次git add動作( 重置index)
 	git diff --cached →索引 和 目前最新版 之間的差異
 	
 sec5.32 (重置工作目錄)
-	git reset --mixed：預設，重置目前的版本(HEAD)、索引(index)
+	git reset --mixed：預設，目前的版本(HEAD) 覆蓋進去 索引(index)，不會更改到目前的工作目錄
 		常用在你想刪除你某個或一些commit的版本，又想保留目前工作目錄下的所有變更
-	gir reset --hard：重置目前的版本(HEAD)、索引(index)和工作目錄(working tree)
+	gir reset --hard：目前的版本(HEAD) 覆蓋進去 索引(index)和工作目錄(working tree)
 		常用在你覺得目前的修改不重要，可以直接洗掉的狀況
 	
 	

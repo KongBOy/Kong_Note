@@ -1,12 +1,12 @@
 sec7.41 修改最近一次的commit
 	方法1：
-		git reset HEAD~1
-		gir reset --mixed HEAD~1
+		git reset HEAD~1 → 可以保留目前的變更的狀態下回到目前版本(head)的前一版，--mixed是預設的參數，和下面一個指令是一樣的。
+		gir reset --mixed HEAD~1 
 		
-		然後再把
+		然後再把要改的檔案改一改
 		
 		git add .
-		git commit 
+		git commit →在這裡會發現 上次commit的內容不見了要重打
 		git commit -am "..." → 等同於 git add . + git commit -m "..."
 		
 		缺點：commit資訊要重打
