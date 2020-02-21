@@ -21,12 +21,19 @@ sec4.22 如何從 遠端repo 下載repo回來
 
 sec4.23 將本地git傳到github上面
 	git remote -v → 看本地git 使用的 遠端儲存庫 是什麼
-	git remote add 「origin：遠端名字，建議用此預設」 「遠端網址url」→ 本地git 加入 遠端位置 加入 你指定的網址，把網址命名為你指定的遠端名字
-	
-	git push -u 「origin：遠端名字，建議用此預設」 「本地分支，舉例用master」 
-	git push --set-upstream 「origin：遠端名字，建議用此預設」 「本地分支，舉例用master」 
-		上二指令一樣效果，只差再參數的 長短 與 可讀性 而已
-		將本地分支 和 遠端分支 做 鏈結，並將本地分支的commit資訊、工作目錄 上傳到 遠端repo 相應的分支
+	git remote add origin http://...  → 本地git 加入 遠端位置 加入 你指定的網址，把網址命名為你指定的遠端名字
+		origin：遠端名字，建議用此預設 
+		http://...：遠端網址url
+
+	下二指令一樣效果，只差再參數的 長短 與 可讀性 而已
+	將本地分支 和 遠端分支 做 鏈結，並將本地分支的commit資訊、工作目錄 上傳到 遠端repo 相應的分支	
+	git push -u origin ...(branch名，通常用master)
+		origin：遠端名字，建議用此預設
+		...(branch名)：本地分支，通常用master
+	git push --set-upstream origin ...(branch名，通常用master)
+		origin：遠端名字，建議用此預設 
+		...(branch名)：本地分支，通常用master
+	第一次下這個指令時，會要你輸入git的帳號、密碼，然後會被儲存在windows的憑證管理中心喔！往後如果需要修正什麼就從控制台進去找～
 	
 	git push → 
 		看你本地目前在哪個branch，如果執行完上面兩者的其中一個 建立好關係的話，就可以把本地 目前所在分支 的commit資訊、工作目錄 上傳到 遠端repo 相應的分支
