@@ -1,0 +1,61 @@
+參考網站：https://blog.wu-boy.com/2011/09/introduction-to-git-submodule/
+
+####################################################
+### 從 遠端repo 加入 到本地repo 成 本地repo的子模組 
+git submodule add <repository> [<path>]</path></repository>  
+	###舉例：git submodule add https://github.com/KongBOy/kong_util.git kong_util(此例可省，因為跟git repo同名)
+		此時 working dir裡會多出兩個東西：
+		(1).gitmodules 
+		(2)你的子repo資料夾 ，並且 會自動add進 index裡喔！
+git commit -m "加入 子模組"
+
+### 更新 本地的 遠端git
+git push
+
+### 本地端的 git 加入子模組，否則本地git不知道你有加入 子模組
+git submodule init
+	其實他做的事情就是去編輯.git/config裡的資訊，舉例在裡面加入以下資訊
+		[submodule "kong_util"]
+			active = true
+			url = https://github.com/KongBOy/kong_util.git
+
+	
+####################################################
+### git clone 父repo 時要注意
+git clone ...
+	此時會發現，子模組資料夾裡面不會有東西，要在執行以下命令才行喔！
+git submodule init
+	原因是git clone 下來時，.git/config裡不會有submodule的資訊，要重新打git submodule init 才會加進去喔！
+	
+git submodule update
+	打完上面那一行，執行這行才會有效果，要不然執行完一樣 子模組資料夾會是空的喔～
+
+
+####################################################
+### 更新 submodule
+在submodule裡更新完後，要在submodule裡面先git add/commit完之後，再到外層做git add/commit才會有作用喔！
+且在 父repo 內 push 上去的東西，不會包含submodule裡面的更改喔！
+同樣道理，在 子repo內 push 上去的東西， 不會包含 父裡面的更改喔！
+
+他不會自動幫你全部一起push上去喔！
+切記哪邊有做更動，就要去哪個repo 各別push～
+
+###################################################
+移除 Sub module
+移除方式非常容易，上面有提到的檔案都必需要經過修改 
+1. 移除目錄
+	git rm --cached [目錄]
+	git rm [目錄]
+	
+2. 修改 .gitmodules，移除不需要的 module
+	vi .gitmodules
+	
+3. 修改 .git/config，移除 submodule URL
+	vi .git/config
+	
+4. 執行 commit
+	git add . 
+	git commit -m "Remove sub module"
+	
+5. 最後 syn module 資料
+	git submodule sync
