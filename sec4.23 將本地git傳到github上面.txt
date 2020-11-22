@@ -99,7 +99,7 @@ sec4.26 如何 刪除「本地分支」與「遠端追蹤分支」
 sec4.27 如何搬動遠端repo 與修改遠端repo的 url
 	像是git遠端repo 想移到 gitlab之類的
 	
-	gir remote -v →
+	gir remote -v → 查看目前 git push/pull 是從遠端哪個地方 push/pull
 	git remote -h → 看remote各種用法
 		ex:可以查到這個指令 git remote set-url origin 新網址
 	進去gitlab新建新的repo
