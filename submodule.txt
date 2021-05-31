@@ -7,7 +7,7 @@ git submodule add <repository> [<path>]</path></repository>
 	git submodule add https://github.com/KongBOy/kong_util.git kong_util(此例資料夾可省，因為跟git repo同名)
 	git submodule add https://github.com/KongBOy/SIFTflow_try SIFT_dev/SIFTflow
 		此時 working dir裡會多出兩個東西：
-		(1).gitmodules，大概長下面這樣子
+		(1).gitmodules，大概長下面這樣子，知道了以後要手動刪除、加入也可以喔
 			[submodule "kong_util"]
 				path = kong_util
 				url = https://github.com/KongBOy/kong_util.git
@@ -15,7 +15,7 @@ git submodule add <repository> [<path>]</path></repository>
 			[submodule "SIFT_dev/SIFTflow"]
 				path = SIFT_dev/SIFTflow
 				url = https://github.com/KongBOy/SIFTflow_try
-		(2)你的子repo資料夾 ，並且 會自動add進 index裡喔！
+		(2)你的 子repo資料夾 如果沒有建立的話會自動建立 並且 會自動add進 index裡， 如果 子repo已存在 就不做事情
 git commit -m "加入 子模組"
 
 ### 更新 本地的 遠端git
