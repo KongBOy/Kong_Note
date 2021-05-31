@@ -3,9 +3,18 @@
 ####################################################
 ### 從 遠端repo 加入 到本地repo 成 本地repo的子模組 
 git submodule add <repository> [<path>]</path></repository>  
-	###舉例：git submodule add https://github.com/KongBOy/kong_util.git kong_util(此例可省，因為跟git repo同名)
+	###舉例：
+	git submodule add https://github.com/KongBOy/kong_util.git kong_util(此例資料夾可省，因為跟git repo同名)
+	git submodule add https://github.com/KongBOy/SIFTflow_try SIFT_dev/SIFTflow
 		此時 working dir裡會多出兩個東西：
-		(1).gitmodules 
+		(1).gitmodules，大概長下面這樣子
+			[submodule "kong_util"]
+				path = kong_util
+				url = https://github.com/KongBOy/kong_util.git
+
+			[submodule "SIFT_dev/SIFTflow"]
+				path = SIFT_dev/SIFTflow
+				url = https://github.com/KongBOy/SIFTflow_try
 		(2)你的子repo資料夾 ，並且 會自動add進 index裡喔！
 git commit -m "加入 子模組"
 
