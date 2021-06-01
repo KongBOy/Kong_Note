@@ -1,8 +1,13 @@
 參考網站：https://blog.wu-boy.com/2011/09/introduction-to-git-submodule/
 
 ####################################################
+### 從 本地子repo 加入 到本地repo 成 本地子repo
+(1)先在 Github上面 建立一個新repo 並與 本地子repo 連接
+之後同下操作
+
+####################################################
 ### 從 遠端repo 加入 到本地repo 成 本地repo的子模組 
-git submodule add <repository> [<path>]</path></repository>  
+git submodule add <repository>(應該是在Github上的url吧) [<path>]</path></repository>(資料夾的概念)
 	###舉例：
 	git submodule add https://github.com/KongBOy/kong_util.git kong_util(此例資料夾可省，因為跟git repo同名)
 	git submodule add https://github.com/KongBOy/SIFTflow_try SIFT_dev/SIFTflow
@@ -15,7 +20,8 @@ git submodule add <repository> [<path>]</path></repository>
 			[submodule "SIFT_dev/SIFTflow"]
 				path = SIFT_dev/SIFTflow
 				url = https://github.com/KongBOy/SIFTflow_try
-		(2)你的 子repo資料夾 如果沒有建立的話會自動建立 並且 會自動add進 index裡， 如果 子repo已存在 就不做事情
+		(2)你的 子repo資料夾 如果沒有建立的話會自動建立 並且 會自動add進 index裡， 如果 子repo已存在 就不會做事情，會自動由(1)搭起關聯～
+		(3)應該吧還沒確認：.git/config 下面會多出 submodule 資訊
 git commit -m "加入 子模組"
 
 ### 更新 本地的 遠端git
