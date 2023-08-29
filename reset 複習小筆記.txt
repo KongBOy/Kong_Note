@@ -1,0 +1,9 @@
+git reflog
+	ORIG_HEAD(merge, rebase,reset 才會更新ORIG_HEAD)
+	可以去 .git/ORIG_HEAD 確認目前 ORIG_HEAD 指向哪個版本
+git revert 版本
+	做該版本的反操作
+
+git checkout 版本/分支名稱
+git checkout -- 檔案/資料夾
+git checkout 版本/分支名稱 檔案/資料夾
