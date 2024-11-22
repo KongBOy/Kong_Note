@@ -1,0 +1,2 @@
+如何恢復單一檔案: https://codelove.tw/@tony/post/rqEYnq
+	git checkout [commit ID] -- path/to/file(你想恢復的檔案路徑)
